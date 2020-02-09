@@ -27,3 +27,6 @@ with similar interests to connect with each other and grow together.
 The companies can input their requirements into the database and also contact people
 who have the skills which they demand. Also people can contact the companies regarding
 the same
+
+
+![](https://raw.githubusercontent.com/MukundKal/postgres-linkedin/master/img/final%20schema.jpeg)
