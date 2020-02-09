@@ -158,21 +158,21 @@ For more information, refer the src **Data_insert_statements.txt**
 
 ```sql
 
-Queries
-1)Find the member who posted the post with the maximum number of likes.	
+--Queries
+--1)Find the member who posted the post with the maximum number of likes.	
 
 	 select first_name 
    from members natural join posts 
    where likes=(select max(likes) 
 		       from posts);
-2) Find the course name,duration which have courses with more than 1 instructor
+--2) Find the course name,duration which have courses with more than 1 instructor
 
  select course_name,course_duration
   from linkedin_learning_courses natural join instructors
   group by course_id
   having count(*)>1  
 
-3) Find the name of companies which have job openings whose skills match with the skills of member having id 116
+--3) Find the name of companies which have job openings whose skills match with the skills of member having id 116
 
 	select first_name from ((skills_required  join user_skills
    on (skill_name=skills)) 
@@ -181,7 +181,7 @@ Queries
    (members.member_id= job_openings.recruiter_id)
    where user_skills.member_id=116;
 
-4) Find the names of companies who have job openings of software developer role in Pune.
+--4) Find the names of companies who have job openings of software developer role in Pune.
 
 	select first_name from 
    job_openings join members 
@@ -189,7 +189,7 @@ Queries
    where role = 'software developer' 
    and job_openings.city = 'pune';
 
-5) Find member id and name of the members who have both c++ and java in their skills. 	
+--5) Find member id and name of the members who have both c++ and java in their skills. 	
 
 	select u1.member_id as mem_id, first_name from 
    (user_skills as u1 join user_skills as u2
@@ -198,7 +198,7 @@ Queries
     where u1.skill_name='c++' 
     and u2.skill_name='java';
 
-6) Find the name of the members who are part of educational groups
+--6) Find the name of the members who are part of educational groups
 
 	select first_name from 
    (group_members natural join groups)
@@ -212,19 +212,20 @@ Queries
    from members
    where membership_type='vip';
 
-8) Find the list of members who are currently unemployed and have ruby as a skill
+--8) Find the list of members who are currently unemployed and have ruby as a skill
 
 	select first_name,last_name
    from members natural join user_skills
    where skill_name ='ruby'
    and working_organization_id is NULL;
 
-9)Find the members who have the maximum number of connections
+--9)Find the members who have the maximum number of connections
 	select member1_id,count(member2_id)
 from connections 
 group by member1_id 
 order by count desc limit 1;
-10) Find the members who are currently unemployed and have done courses which have duration more than 90 days
+
+--10) Find the members who are currently unemployed and have done courses which have duration more than 90 days
 
 	select distinct first_name,last_name, course_name,age 
    from ((members natural join member_courses)
@@ -232,7 +233,7 @@ order by count desc limit 1;
    where working_organization_id is NULL
    and course_duration>90;
 
-11) Find the two most active groups which have liked the most number of posts
+--11) Find the two most active groups which have liked the most number of posts
 
 	select group_id, sum(likes)  
     from posts join group_members
@@ -241,7 +242,7 @@ order by count desc limit 1;
     order by sum
     desc limit 2;
 
-12) Find the name of the members who have completed the course soft skills after given date and 
+--12) Find the name of the members who have completed the course soft skills after given date and 
 
 	select first_name, date_completed from 
     (members natural join member_courses)
@@ -249,7 +250,7 @@ order by count desc limit 1;
     where date_completed > '2018-01-01'
     and course_name ='soft skills';
 
-13) 	Find the details of suitable candidates for the role of web developer offered by different companies by matching their skills
+--13) 	Find the details of suitable candidates for the role of web developer offered by different companies by matching their skills
 	
 	select  distinct member_recommended_id as m1, 
     (select first_name from members where members.member_id=member_recommended_id ),
@@ -261,13 +262,13 @@ order by count desc limit 1;
     and role = 'web developer'
     and first_name='microsoft';
 
-14) 	Find how popular different skills are among the users
+--14) 	Find how popular different skills are among the users
 	select skill_name, (count(skill_name)*100.0)/(select count(*) from user_skills) as cntpercent
     from user_skills 
     group by skill_name
     order by (count(skill_name)*100.0)/(select count(*) from user_skills) desc;
 
-15) Find the company,roles,skills required of the jobs in pune which require experience less than 3
+--15) Find the company,roles,skills required of the jobs in pune which require experience less than 3
 	select first_name,role,skills
     from (job_openings join members 
 	  on (members.member_id = job_openings.recruiter_id)
@@ -275,7 +276,7 @@ order by count desc limit 1;
 	  where job_openings.city = 'bangalore'
 	  and experience_required<3;
 
-16) Find the details of users who have done course of c++ and have got feedback better tha 2 out of 5
+--16) Find the details of users who have done course of c++ and have got feedback better tha 2 out of 5
 	select first_name,certificate_number,member_id,skill_name
     from (member_courses natural join members)
     natural join linkedin_learning_courses
@@ -283,4 +284,4 @@ order by count desc limit 1;
     where skill_provided ='c++'
     and feedback>2
     
-    ```
+```
