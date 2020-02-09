@@ -38,7 +38,8 @@ the same
 
 # App Structure
 
-
+>Front-end structure
+--------------------------------------------------------------------------------------------------------------------------------------
 ## >1.Connection Request
 ```python
 import psycopg2
@@ -67,3 +68,34 @@ After the connection is succesfully established, user is presented with *pre-con
 
 ## >2.Console Functional Queries
 ![](https://raw.githubusercontent.com/MukundKal/postgres-linkedin/master/img/console.PNG)
+
+
+>Back-end structure
+-------------------------------------------------------------------------------------------------------------
+
+## 1>Organising the data and DB.
+
+We have to develop our DB with all our tables (the schema) and then populate the tables with data. The former are the *DDL statements* where we describe the tables and the latter is *Data Insert statements* where the actual data is put in. Below is a snipped from the **DDL_Script.txt** for creating table >member.
+```sql
+create schema linkedin;
+
+create table member(
+first_name varchar(50),
+last_name varchar(50),
+date_of_birth date,
+gender char,
+member_id int Primary key,
+pswrd varchar(20),
+age int,
+email varchar(50),
+membership_type varchar(50),
+card_no int,
+city varchar(50),
+street_no varchar(50),
+pincode int,
+house_no varchar(50),
+organization_id int,
+isRecruiter boolean,
+Foreign Key(membership_type) references membership_details(membership_type),
+Foreign Key(organization_id) references currently_working_at(organization_id));
+
