@@ -64,4 +64,3 @@ finally:
 ```
 
 *Console Functional Queries*
-![]()
