@@ -39,7 +39,7 @@ the same
 ## Console 
 
 
-1.==Connection Request==
+1. >Connection Request
 ```python
 import psycopg2
 from texttable import Texttable
