@@ -1,0 +1,157 @@
+DDL script
+create schema linkedin;
+create table member(
+first_name varchar(50),
+last_name varchar(50),
+date_of_birth date,
+gender char,
+member_id int Primary key,
+pswrd varchar(20),
+age int,
+email varchar(50),
+membership_type varchar(50),
+card_no int,
+city varchar(50),
+street_no varchar(50),
+pincode int,
+house_no varchar(50),
+organization_id int,
+isRecruiter boolean,
+Foreign Key(membership_type) references membership_details(membership_type),
+Foreign Key(organization_id) references currently_working_at(organization_id));
+
+
+create table member_courses(
+member_id int not null,
+course_id int not null,
+date_completed date,
+feedback integer,
+certifcate_number varchar(20),
+Primary Key(member_id,course_id),
+Foreign Key(member_id) references member(member_id),
+Foreign Key(course_id) references linkedin_learning_courses(course_id)
+);
+
+
+create table linkedin_learning_courses(
+course_id int Primary Key,
+course_name varchar(50),
+course_duration int,
+instructor_id int,
+skill_provided varchar(50),
+course_category varchar(50),
+Foreign Key (instructor_id) references member(member_id));
+
+
+create table groups(
+group_id int Primary Key,
+date_started date,
+group_name varchar(50),
+created_by_id int,
+group_category varchar(50),
+Foreign Key (created_by_id) references member(member_id));
+
+
+
+create table connections(
+member1_id int not null,
+member2_id int not null,
+date_added date,
+connection_id int,
+Primary Key (member1_id, member2_id),
+Foreign Key(member1_id) references member(member_id),
+Foreign Key(member2_id) references member(member_id));
+
+
+
+create table group_members(
+group_members_id int not null,
+group_id int not null,
+Primary Key (group_members_id,group_id),
+Foreign Key(group_members_id) references member(member_id),
+Foreign Key(group_id) references groups(group_id));
+
+create table job_openings(
+recruiter_id int,
+city varchar(50),
+experience_required int,
+role varchar(50),
+job_id integer Primary key,
+country varchar(50),
+Foreign Key (recruiter_id) references member(member_id));
+
+
+create table likes_post(
+member_id int,
+post_id int,
+Primary Key (member_id,post_id),
+Foreign Key(post_id) references posts(post_id));
+
+
+create table skills_required(
+skills varchar (50),
+job_id varchar(50),
+Primary Key (skills,job_id),
+Foreign Key(skills) references skill_table(skills),
+Foreign Key(job_id) references job_openings(job_id));
+
+
+create table skill_table(
+skills varchar(50) Primary Key);
+
+
+create table user_skills(
+member_id varchar(50) not null,
+skill_name varchar(50),
+Primary Key(member_id, skill_name),
+Foreign Key(member_id) references member(member_id),
+Foreign Key(skill_name) references skill_table(skills));
+
+
+create table currently_working_at(
+organization_name varchar(50),
+organization_id int Primary Key,
+description varchar(50),
+location varchar(50));
+
+
+create table posts(
+post_id int Primary Key,
+Member_id int,
+likes int,
+comments int,
+shares int,
+date_posted date,
+trending_pt int,
+trending_no int,
+time_posted timestamp with time zone,
+post_category varchar(50),
+Foreign Key(member_id) references member(member_id));
+
+
+create table member_recommendations(
+member_recommending_id int not null,
+member_recommended_id int not null,
+Primary Key (member_recommending_id,member_recommended_id),
+Foreign Key(member_recommending_id) references member(member_id),
+Foreign Key(member_recommended_id) references member(member_id));
+
+
+create table skills_recommended(
+member_recommending_id not null,
+member_recommended_id int not null,
+skills varchar(50),
+
+Primary Key (member_recommending_id,member_recommended_id,skills),
+
+Foreign Key(member_recommended_id) references members(member_id),
+Foreign Key(member_recommending_id) references members(member_id)
+
+);
+
+
+
+create table membership_details(
+membership_type varchar(50) Primary Key,
+amount_paid int);
+
