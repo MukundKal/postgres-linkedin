@@ -36,10 +36,10 @@ the same
 
 
 
-## Console 
+# App Structure
 
 
->1.Connection Request
+## >1.Connection Request
 ```python
 import psycopg2
 from texttable import Texttable
@@ -62,6 +62,8 @@ finally:
     print("You are connected to database")
 
 ```
+After the connection is succesfully established, user is presented with *pre-configured queries* that are suitable for out *social network*.
 
-*Console Functional Queries*
+
+## >2.Console Functional Queries
 ![](https://raw.githubusercontent.com/MukundKal/postgres-linkedin/master/img/console.PNG)
