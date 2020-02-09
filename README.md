@@ -29,7 +29,7 @@ who have the skills which they demand. Also people can contact the companies reg
 the same
 
 # Schema
-![](https://github.com/MukundKal/postgres-linkedin/blob/master/img/schema.PNG)
+![](https://raw.githubusercontent.com/MukundKal/postgres-linkedin/master/img/schema.PNG)
 
 # ER Diagram
 ![](https://raw.githubusercontent.com/MukundKal/postgres-linkedin/master/img/final%20schema.jpeg)
@@ -64,3 +64,4 @@ finally:
 ```
 
 *Console Functional Queries*
+![](https://raw.githubusercontent.com/MukundKal/postgres-linkedin/master/img/console.PNG)
