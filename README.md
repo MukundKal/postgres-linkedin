@@ -28,5 +28,9 @@ The companies can input their requirements into the database and also contact pe
 who have the skills which they demand. Also people can contact the companies regarding
 the same
 
+# Schema
+![](https://github.com/MukundKal/postgres-linkedin/blob/master/img/schema.PNG)
 
+# ER Diagram
 ![](https://raw.githubusercontent.com/MukundKal/postgres-linkedin/master/img/final%20schema.jpeg)
+
