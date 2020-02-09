@@ -34,3 +34,31 @@ the same
 # ER Diagram
 ![](https://raw.githubusercontent.com/MukundKal/postgres-linkedin/master/img/final%20schema.jpeg)
 
+
+
+## Console 
+
+
+1.==Connection Request==
+```python
+import psycopg2
+from texttable import Texttable
+import time
+
+try:
+    connection=psycopg2.connect(
+                            host="POSTGRES_SERVER_IP",
+                            port="POSTGRES_P_NUMBER",
+                            user="USERNAME",
+                            password="PASSWORD",
+                            database="DB_NAME"
+                            )
+
+except psycopg2.OperationalError as e:
+    print('Unable to connect!\n{0}').format(e)
+    sys.exit(1)
+finally:
+#connect to db 
+    print("You are connected to database")
+
+```

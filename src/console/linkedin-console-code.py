@@ -4,11 +4,11 @@ import time
 
 try:
     connection=psycopg2.connect(
-                            host="10.100.71.21",
-                            port="5432",
-                            user="201701105",
-                            password="201701105",
-                            database="201701105"
+                            host="POSTGRES_SERVER_IP",
+                            port="POSTGRES_P_NUMBER",
+                            user="USERNAME",
+                            password="PASSWORD",
+                            database="DB_NAME"
                             )
 
 except psycopg2.OperationalError as e:
