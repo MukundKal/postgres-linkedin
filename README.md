@@ -62,3 +62,6 @@ finally:
     print("You are connected to database")
 
 ```
+
+*Console Functional Queries*
+![]()

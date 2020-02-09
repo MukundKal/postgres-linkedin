@@ -25,7 +25,7 @@ cursor=connection.cursor()
 
 
 #query execute
-cursor.execute("set search_path to linkedin")
+cursor.execute("set search_path to <DB_NAME>")
 
 
 
