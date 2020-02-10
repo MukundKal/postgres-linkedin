@@ -285,3 +285,155 @@ order by count desc limit 1;
     and feedback>2
     
 ```
+
+## Functions 
+Functions in postgresql are pretty much like any function implementation and can practically be used to implement any shortcut or functionality. Below are the implementations of functions in the app.
+
+1. **top_skills()** - returns the top skills for a particular member 
+
+2. **trending_posts()** - returns trending posts from the posts table using the following formula:
+```python
+trpt = r.likes + (r.comments*3) + (r.shares*5)
+```
+
+```sql
+set search_path to linkedin;
+
+CREATE OR REPLACE FUNCTION top_skills()
+RETURNS integer AS $BODY$
+
+DECLARE
+skpt integer;
+a integer;
+r record;
+r1 record;
+
+BEGIN
+a=1;
+
+for r in select skill_name,count(member_id) as skillpt from user_skills group by skill_name order by skillpt desc
+
+loop
+
+update skill_table set skill_points = r.skillpt where skill_table.skills = r.skill_name;
+update skill_table set top_skill_no = a where skill_table.skills = r.skill_name;
+a = a+1;
+end loop;
+
+RETURN 1;
+
+END;
+
+$BODY$ LANGUAGE plpgsql;
+
+------------------------------------------------------------------------------
+set search_path to linkedin;
+
+CREATE OR REPLACE FUNCTION trending_posts()
+RETURNS integer AS $BODY$
+DECLARE
+trpt integer;
+trno integer;
+likes integer;
+comm integer;
+shar integer;
+a integer;
+r record;
+BEGIN
+
+
+
+for r in select * from posts
+loop
+--SELECT r.likes into likes FROM posts;
+--SELECT r.comments into comm FROM posts;
+--SELECT r.shares into shar FROM posts;
+trpt = r.likes + (r.comments*3) + (r.shares*5);
+update posts set trending_pt = trpt where r.post_id = posts.post_id;
+
+end loop;
+
+a = 1;
+
+for r in select * from posts order by trending_pt desc
+loop
+
+
+
+update posts set trending_no = a where r.post_id = posts.post_id;
+a = a+1;
+end loop;
+
+RETURN 1;
+
+END;
+
+
+$BODY$ LANGUAGE plpgsql;
+
+```
+
+## Triggers
+Triggers are basically functions that are automatically executed when a specified event occurs. This can be used in a variety of applications to update a table if a change happens in another table. 
+
+Below are the implemented triggers w/ our linkedin DB:
+1. **on_liking_post()**  - this trigger updates the number of likes when a post is liked (automatically).
+2. **add_skills()** - this trigger pretty much updates skills when members finish new courses from our linkedin learning courses.
+
+```sql
+
+set search_path to linkedin;
+
+create or replace function on_liking_post()
+returns trigger as $body$
+
+declare 
+r record;	
+a integer;
+begin
+for r in select * from posts
+
+loop
+a = r.likes;
+if (tg_op = 'insert') then 
+update posts set likes = a+1 where r.post_id = new.post_id ;
+end if;
+end loop;
+return new;
+end;
+$body$ language plpgsql;
+
+create trigger post_is_liked
+after insert or update or delete on likes_post
+	for each row execute procedure on_liking_post();
+
+
+-----------------------------------------------------
+ 
+ 
+ set search_path to linkedin;
+
+create or replace function add_skills()
+returns trigger as $body$
+
+declare 
+r record;	
+a varchar;
+begin
+
+for r in select * from (member_courses natural join linkedin_learning_courses) as new_table
+
+loop
+a = r.skill_provided;
+if (tg_op = 'insert') then 
+update user_skills set skill_name = a where r.member_id = new.member_id ;
+end if;
+end loop;
+return new;
+end;
+$body$ language plpgsql;
+
+create trigger course_is_completed
+after insert or update or delete on member_courses
+	for each row execute procedure add_skills();
+```
