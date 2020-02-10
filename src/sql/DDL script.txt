@@ -1,5 +1,6 @@
-DDL script
+
 create schema linkedin;
+
 create table member(
 first_name varchar(50),
 last_name varchar(50),

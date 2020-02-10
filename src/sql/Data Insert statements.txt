@@ -1,4 +1,4 @@
-Insert statements
+
 
 INSERT INTO linkedin.connections VALUES (101, 102, '2010-05-13');
 INSERT INTO linkedin.connections VALUES (101, 118, '2001-06-03');

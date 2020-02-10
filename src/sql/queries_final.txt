@@ -1,4 +1,4 @@
-Queries
+
 1)Find the member who posted the post with the maximum number of likes.	
 
 	 select first_name 
